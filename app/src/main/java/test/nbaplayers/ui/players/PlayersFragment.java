@@ -8,12 +8,14 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import test.nbaplayers.databinding.FragmentPlayersBinding;
+import test.nbaplayers.databinding.LoadingViewBinding;
 import test.nbaplayers.model.Player;
 import test.nbaplayers.viewmodel.PlayersResultViewModel;
 import test.nbaplayers.viewmodel.StatsResultViewModel;
@@ -24,6 +26,7 @@ public class PlayersFragment extends Fragment
 
    boolean isLoading = false;
    private FragmentPlayersBinding binding;
+   private LoadingViewBinding loadingViewBinding;
 
    private RecyclerView playersRecycleView;
 
@@ -32,6 +35,8 @@ public class PlayersFragment extends Fragment
    PlayersResultViewModel playersResultViewModel;
 
    private PlayersListAdapter playersListAdapter;
+
+   private String searchText = "";
 
    public View onCreateView(@NonNull LayoutInflater inflater,
                             ViewGroup container, Bundle savedInstanceState)
@@ -42,13 +47,31 @@ public class PlayersFragment extends Fragment
       View root = binding.getRoot();
       playersRecycleView = binding.playersRecycleView;
 
-      playersListAdapter = new PlayersListAdapter(players);
+      binding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener()
+      {
+         @Override
+         public boolean onQueryTextSubmit(String query)
+         {
+            return false;
+         }
+
+         @Override
+         public boolean onQueryTextChange(String newText)
+         {
+            playersListAdapter.filter(newText);
+            searchText = newText;
+            return true;
+         }
+      });
+
+      playersListAdapter = new PlayersListAdapter(getActivity(), players);
 
       LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
       DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(playersRecycleView.getContext(),
                                                                               layoutManager.getOrientation());
       playersRecycleView.addItemDecoration(dividerItemDecoration);
       playersRecycleView.setLayoutManager(layoutManager);
+//      playersRecycleView.setLayoutManager(new LinearLayoutManager(getContext()));
       playersRecycleView.setAdapter(playersListAdapter);
 
       playersRecycleView.addOnScrollListener(new RecyclerView.OnScrollListener()
@@ -57,12 +80,18 @@ public class PlayersFragment extends Fragment
          public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState)
          {
             super.onScrollStateChanged(recyclerView, newState);
+            if (!recyclerView.canScrollVertically(-11) && newState==RecyclerView.SCROLL_STATE_IDLE)
+               binding.searchView.setVisibility(View.VISIBLE);
          }
 
          @Override
          public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy)
          {
             super.onScrolled(recyclerView, dx, dy);
+
+            if (dy > 0) {
+               binding.searchView.setVisibility(View.GONE);
+            }
 
             LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
             if(!isLoading)
@@ -101,10 +130,13 @@ public class PlayersFragment extends Fragment
          int currentCount = players.size();
          players.addAll(playersResult.getPlayers());
          playersListAdapter.notifyItemRangeInserted(currentCount, playersResult.getPlayers().size());
+         playersListAdapter.filter(searchText);
+//         playersListAdapter.notifyDataSetChanged();
       });
 
       playersResultViewModel.loading.observe(getViewLifecycleOwner(), loading -> {
          isLoading = loading;
+
          binding.progressView.progressView.setVisibility(loading ? View.VISIBLE : View.GONE);
       });
 

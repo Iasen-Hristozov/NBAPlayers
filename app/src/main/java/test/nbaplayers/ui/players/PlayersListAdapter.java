@@ -1,49 +1,67 @@
 package test.nbaplayers.ui.players;
 
+import android.content.Context;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import test.nbaplayers.R;
 import test.nbaplayers.model.Player;
 
-public class PlayersListAdapter extends RecyclerView.Adapter<PlayersListAdapter.RepositoryViewHolder>
+public class PlayersListAdapter extends RecyclerView.Adapter<PlayersListAdapter.PlayerViewHolder>
 {
-   private final List<Player>           playerList;
+   private final Context      context;
+   private final List<Player> playersList;
+
+   List<Player> visiblePlayersList = new ArrayList<>();
+   private String filterString = "";
 //   private final PlayersResultViewModel playersResultViewModel;
 
 //   public PlayersListAdapter(List<Player> repositoriesList, PlayersResultViewModel repositoryViewModel)
-   public PlayersListAdapter(List<Player> repositoriesList)
+   public PlayersListAdapter(Context context, List<Player> playersList)
    {
-      this.playerList = repositoriesList;
+      this.context = context;
+      this.playersList = playersList;
+      this.visiblePlayersList.addAll(playersList);
 //      this.playersResultViewModel = repositoryViewModel;
    }
 
+
+
    @NonNull
    @Override
-   public RepositoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
+   public PlayerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
    {
       View view = LayoutInflater.from(parent.getContext())
                                 .inflate(R.layout.item_player, parent, false);
 
-      return new RepositoryViewHolder(view);
+      return new PlayerViewHolder(view);
    }
 
    @Override
-   public void onBindViewHolder(@NonNull RepositoryViewHolder holder, int position)
+   public void onBindViewHolder(@NonNull PlayerViewHolder holder, int position)
    {
-      holder.getPlayerTextView().setText(String.format("%s %s",
-                                                       playerList.get(position)
-                                                                 .getFirstName(),
-                                                       playerList.get(position)
-                                                                 .getLastName()));
+      holder.bind(position);
+
+//      holder.getPlayerTextView().setText(String.format("%s %s",
+//                                                       playersList.get(position)
+//                                                                 .getFirstName(),
+//                                                       playersList.get(position)
+//                                                                 .getLastName()));
+
       holder.itemView.setOnClickListener(v -> {
-               Player player = playerList.get(position);
+               Player player = visiblePlayersList.get(position);
 //               playersResultViewModel.fetchContributorsFromRemote(player.getOwner().getLogin(), player.getName());
 //               playersResultViewModel.setRepositoryLiveData(player);
 //               Navigation.findNavController(v).navigate(R.id.action_user_to_repository);
@@ -53,15 +71,16 @@ public class PlayersListAdapter extends RecyclerView.Adapter<PlayersListAdapter.
    @Override
    public int getItemCount()
    {
-      return playerList.size();
+//      return playersList.size();
+      return visiblePlayersList.size();
    }
 
 
-   static class RepositoryViewHolder extends RecyclerView.ViewHolder
+   class PlayerViewHolder extends RecyclerView.ViewHolder
    {
       private final TextView playerTextView;
 
-      public RepositoryViewHolder(@NonNull View itemView)
+      public PlayerViewHolder(@NonNull View itemView)
       {
          super(itemView);
          playerTextView = itemView.findViewById(R.id.playerTextView);
@@ -71,5 +90,54 @@ public class PlayersListAdapter extends RecyclerView.Adapter<PlayersListAdapter.
       {
          return playerTextView;
       }
+
+      void bind(int position)
+      {
+         String text = visiblePlayersList.get(position).getFirstName() + " " + visiblePlayersList.get(position).getLastName();
+         Spannable contentSpannable = new SpannableString(text);
+         int filteredStart = text.toLowerCase(Locale.getDefault()).indexOf(filterString.toLowerCase(Locale.getDefault()));
+         int filterEnd;
+         if(filteredStart < 0)
+         {
+            filteredStart = 0;
+            filterEnd = 0;
+         }
+         else
+            filterEnd = filteredStart + filterString.length();
+         contentSpannable.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, R.color.purple_200)),
+                                  filteredStart,
+                                  filterEnd,
+                                  Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+         playerTextView.setText(contentSpannable);
+      }
+   }
+
+
+
+   public void filter(String charText)
+   {
+      charText = charText.toLowerCase(Locale.getDefault());
+      filterString = charText;
+
+      ArrayList<Player> playersListTmp = new ArrayList<>();
+      visiblePlayersList.clear();
+      if(charText.length() == 0)
+      {
+         visiblePlayersList.addAll(playersList);
+      }
+      else
+      {
+         String name;
+         for(Player player : playersList)
+         {
+            if(player.getFirstName().toLowerCase(Locale.getDefault()).contains(charText)
+              || player.getLastName().toLowerCase(Locale.getDefault()).contains(charText))
+            {
+               playersListTmp.add(player);
+            }
+         }
+         visiblePlayersList.addAll(playersListTmp);
+      }
+      notifyDataSetChanged();
    }
 }
