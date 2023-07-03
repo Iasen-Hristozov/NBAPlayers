@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">NBA Players</string>
+    <string name="title_players">Players</string>
+    <string name="title_about">About</string>
+    <string name="title_player">Player</string>
+    <string name="sample_player">player</string>
+</resources>
