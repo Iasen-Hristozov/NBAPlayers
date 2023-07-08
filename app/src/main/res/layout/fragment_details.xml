@@ -1,16 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.details.DetailsFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/statsRecycleView"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:scrollbars="vertical" />
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/seasonTextView"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintVertical_bias="0.3"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="@string/not_available"
+            android:textColor="#777"
+            android:textSize="22sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <TextView
+            android:id="@+id/seasonLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/season_label"
+            android:textColor="#777"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@+id/seasonTextView"
+            app:layout_constraintStart_toStartOf="@+id/seasonTextView"
+            app:layout_constraintTop_toBottomOf="@+id/seasonTextView" />
+
+        <TextView
+            android:id="@+id/gamesTextView"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="@string/not_available"
+            android:textColor="#777"
+            android:textSize="22sp"
+            app:layout_constraintEnd_toStartOf="@+id/divider"
+            app:layout_constraintTop_toTopOf="@+id/divider" />
+
+        <TextView
+            android:id="@+id/gamesLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/games_label"
+            android:textColor="#777"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@+id/gamesTextView"
+            app:layout_constraintStart_toStartOf="@+id/gamesTextView"
+            app:layout_constraintTop_toBottomOf="@+id/gamesTextView" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:background="#ccc"
+            app:layout_constraintBottom_toBottomOf="@+id/pointsLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/seasonLabel" />
+
+        <TextView
+            android:id="@+id/pointsTextView"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="@string/not_available"
+            android:textColor="#777"
+            android:textSize="22sp"
+            app:layout_constraintStart_toEndOf="@id/divider"
+            app:layout_constraintTop_toTopOf="@+id/divider" />
+
+        <TextView
+            android:id="@+id/pointsLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:text="@string/points_label"
+            android:textColor="#777"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@+id/pointsTextView"
+            app:layout_constraintStart_toStartOf="@+id/pointsTextView"
+            app:layout_constraintTop_toBottomOf="@+id/pointsTextView" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <include layout="@layout/loading_view"
         android:id="@+id/progressView"

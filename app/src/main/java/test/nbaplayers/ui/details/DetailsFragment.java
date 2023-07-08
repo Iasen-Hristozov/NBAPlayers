@@ -8,12 +8,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import test.nbaplayers.databinding.FragmentDetailsBinding;
 import test.nbaplayers.viewmodel.SeasonAveragesResultViewModel;
-import test.nbaplayers.viewmodel.StatsResultViewModel;
-
 
 public class DetailsFragment extends Fragment
 {
@@ -22,7 +18,6 @@ public class DetailsFragment extends Fragment
 
    private FragmentDetailsBinding binding;
 
-   StatsResultViewModel          statsResultViewModel;
    SeasonAveragesResultViewModel seasonAveragesViewModel;
 
    @Override
@@ -35,44 +30,24 @@ public class DetailsFragment extends Fragment
       }
    }
 
-
    @Override
    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                             Bundle savedInstanceState)
    {
       binding = FragmentDetailsBinding.inflate(inflater, container, false);
-
-
       View root = binding.getRoot();
-
-
-      LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-      DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(binding.statsRecycleView.getContext(),
-                                                                              layoutManager.getOrientation());
-      binding.statsRecycleView.addItemDecoration(dividerItemDecoration);
-      binding.statsRecycleView.setLayoutManager(layoutManager);
 
       if(playerId > 0)
       {
-//         statsResultViewModel = new ViewModelProvider(this).get(StatsResultViewModel.class);
-//         statsResultViewModel.fetchFromRemote(playerId);
-//         statsResultViewModel.statsListLiveData.observe(getViewLifecycleOwner(), statsList -> {
-////            statsList.get(0).getGame().
-////            Map<YearMonth,Map<String,Long>> = statsList.stream().get
-//
-//            DetailsListAdapter adapter = new DetailsListAdapter(getActivity(), statsList);
-//            binding.statsRecycleView.setAdapter(adapter);
-//         });
-//         statsResultViewModel.loading.observe(getViewLifecycleOwner(), loading -> binding.progressView.progressView.setVisibility(loading ? View.VISIBLE : View.GONE));
-
          seasonAveragesViewModel = new ViewModelProvider(this).get(SeasonAveragesResultViewModel.class);
          seasonAveragesViewModel.fetchFromRemote(250);
          seasonAveragesViewModel.seasonAveragesLiveData.observe(getViewLifecycleOwner(), seasonAverages -> {
-//            statsList.get(0).getGame().
-//            Map<YearMonth,Map<String,Long>> = statsList.stream().get
-               int a = 1;
-//            DetailsListAdapter adapter = new DetailsListAdapter(getActivity(), statsList);
-//            binding.statsRecycleView.setAdapter(adapter);
+            if(seasonAverages.getSeason() != null)
+               binding.seasonTextView.setText(String.valueOf(seasonAverages.getSeason()));
+            if(seasonAverages.getGamesPlayed() != null)
+               binding.gamesTextView.setText(String.valueOf(seasonAverages.getGamesPlayed()));
+            if(seasonAverages.getPts() != null)
+               binding.pointsTextView.setText(String.valueOf(seasonAverages.getPts()));
          });
          seasonAveragesViewModel.loading.observe(getViewLifecycleOwner(), loading -> binding.progressView.progressView.setVisibility(loading ? View.VISIBLE : View.GONE));
       }

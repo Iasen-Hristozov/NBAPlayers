@@ -53,7 +53,7 @@
         android:id="@+id/navigation_details"
         android:name="test.nbaplayers.ui.details.DetailsFragment"
         android:label="Details"
-        tools:layout="@layout/fragment_details">
+        tools:layout="@layout/fragment_details_old">
 <!--        <argument-->
 <!--            android:name="statsList"-->
 <!--            app:argType="test.nbaplayers.model.Stats[]"/>-->
