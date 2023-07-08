@@ -17,26 +17,18 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import test.nbaplayers.MainActivity;
 import test.nbaplayers.databinding.FragmentPlayersBinding;
-import test.nbaplayers.databinding.LoadingViewBinding;
 import test.nbaplayers.model.Player;
-import test.nbaplayers.viewmodel.PlayersResultViewModel;
-import test.nbaplayers.viewmodel.StatsResultViewModel;
+import test.nbaplayers.viewmodel.PlayersViewModel;
 
 public class PlayersFragment extends Fragment implements FragmentManager.OnBackStackChangedListener
 {
-   private final static int PLAYERS_NUMBER = 25;
-
    boolean isLoading = false;
    private FragmentPlayersBinding binding;
-   private LoadingViewBinding loadingViewBinding;
-
-   private RecyclerView playersRecycleView;
 
    private final static ArrayList<Player> players = new ArrayList<>();
 
-   PlayersResultViewModel playersResultViewModel;
+   PlayersViewModel playersResultViewModel;
 
    private PlayersListAdapter playersListAdapter;
 
@@ -54,7 +46,7 @@ public class PlayersFragment extends Fragment implements FragmentManager.OnBackS
    {
       binding = FragmentPlayersBinding.inflate(inflater, container, false);
       View root = binding.getRoot();
-      playersRecycleView = binding.playersRecycleView;
+      RecyclerView playersRecycleView = binding.playersRecycleView;
 
       binding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener()
       {
@@ -73,19 +65,15 @@ public class PlayersFragment extends Fragment implements FragmentManager.OnBackS
          }
       });
 
-      playersListAdapter = new PlayersListAdapter(getActivity(), players, (player, view) -> {
-//         PlayersFragmentDirections.ActionPlayersToPlayer action  = PlayersFragmentDirections.actionPlayersToPlayer(player);
-////               Navigation.findNavController(v).navigate(R.id.action_players_to_player);
-//         Navigation.findNavController(view).navigate(action);
-         Navigation.findNavController(view).navigate(PlayersFragmentDirections.actionPlayersToPlayer(player));
-      });
+      playersListAdapter = new PlayersListAdapter(getActivity(),
+                                                  players,
+                                                  (player, view) -> Navigation.findNavController(view).navigate(PlayersFragmentDirections.actionPlayersToPlayer(player)));
 
       LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
       DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(playersRecycleView.getContext(),
                                                                               layoutManager.getOrientation());
       playersRecycleView.addItemDecoration(dividerItemDecoration);
       playersRecycleView.setLayoutManager(layoutManager);
-//      playersRecycleView.setLayoutManager(new LinearLayoutManager(getContext()));
       playersRecycleView.setAdapter(playersListAdapter);
 
       playersRecycleView.addOnScrollListener(new RecyclerView.OnScrollListener()
@@ -94,7 +82,7 @@ public class PlayersFragment extends Fragment implements FragmentManager.OnBackS
          public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState)
          {
             super.onScrollStateChanged(recyclerView, newState);
-            if (!recyclerView.canScrollVertically(-11) && newState==RecyclerView.SCROLL_STATE_IDLE)
+            if (!recyclerView.canScrollVertically(-1) && newState==RecyclerView.SCROLL_STATE_IDLE)
                binding.searchView.setVisibility(View.VISIBLE);
          }
 
@@ -119,28 +107,9 @@ public class PlayersFragment extends Fragment implements FragmentManager.OnBackS
          }
       });
 
-
-//      final TextView textView = binding.textHome;
-//      playersViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-
-      playersResultViewModel = new ViewModelProvider(this).get(PlayersResultViewModel.class);
-      playersResultViewModel.fetchFromRemote(0, PLAYERS_NUMBER);
-
-
-//      StatsResultViewModel statsResultViewModel = new ViewModelProvider(this).get(StatsResultViewModel.class);
-//      statsResultViewModel.fetchFromRemote(237);
-
+      playersResultViewModel = new ViewModelProvider(this).get(PlayersViewModel.class);
+      playersResultViewModel.fetchNextPlayers();
       playersResultViewModel.playersResultLiveData.observe(getViewLifecycleOwner(), playersResult -> {
-//         PlayersResultViewModel repositoryViewModel = new ViewModelProvider(requireActivity()).get(PlayersResultViewModel.class);
-//         PlayersListAdapter repositoriesListAdapter = new PlayersListAdapter(playersResult.getPlayers());
-//
-//         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-//         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(playersRecycleView.getContext(),
-//                                                                                 layoutManager.getOrientation());
-//         playersRecycleView.addItemDecoration(dividerItemDecoration);
-//         playersRecycleView.setLayoutManager(layoutManager);
-//         playersRecycleView.setAdapter(repositoriesListAdapter);
-
          int currentCount = players.size();
          players.addAll(playersResult.getPlayers());
          playersListAdapter.notifyItemRangeInserted(currentCount, playersResult.getPlayers().size());
@@ -158,16 +127,7 @@ public class PlayersFragment extends Fragment implements FragmentManager.OnBackS
    }
    private void loadMore()
    {
-//      notificationList.add(null);
-
-//      playersListAdapter.notifyItemInserted(players.size() - 1);
-
-//      getNotificationsViewModel.fetchGetNotifications(login.getTokenEnc(),
-//                                                      btEnuLanguage,
-//                                                      login.getFiscalCode(),
-//                                                      notificationList.size() - 1,
-//                                                      PLAYERS_NUMBER);
-      playersResultViewModel.fetchFromRemote(players.size(), PLAYERS_NUMBER);
+      playersResultViewModel.fetchNextPlayers();
    }
 
    @Override

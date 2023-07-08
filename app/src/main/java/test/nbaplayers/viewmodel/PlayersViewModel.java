@@ -12,8 +12,10 @@ import io.reactivex.schedulers.Schedulers;
 import test.nbaplayers.model.BallDontLieApiService;
 import test.nbaplayers.model.PlayersResult;
 
-public class PlayersResultViewModel extends AndroidViewModel
+public class PlayersViewModel extends AndroidViewModel
 {
+   private final static int PLAYERS_NUMBER = 25;
+   private int page;
    public MutableLiveData<PlayersResult> playersResultLiveData  = new MutableLiveData<>();
    public MutableLiveData<Boolean>       playersResultLoadError = new MutableLiveData<>();
    public MutableLiveData<Boolean>       loading                = new MutableLiveData<>();
@@ -22,41 +24,44 @@ public class PlayersResultViewModel extends AndroidViewModel
    private final BallDontLieApiService ballDontLieApiService;
    private final CompositeDisposable   disposable;
 
-   public PlayersResultViewModel(@NonNull Application application)
+   public PlayersViewModel(@NonNull Application application)
    {
       super(application);
+
+      page = 1;
 
       ballDontLieApiService = new BallDontLieApiService();
 
       disposable = new CompositeDisposable();
    }
 
-   public void fetchFromRemote(int page, int perPage)
+   public void fetchNextPlayers()
    {
       loading.setValue(true);
-      disposable.add(ballDontLieApiService.getPlayersResult(page, perPage)
+      disposable.add(ballDontLieApiService.getPlayersResult(PLAYERS_NUMBER, page)
                                           .subscribeOn(Schedulers.newThread())
                                           .observeOn(AndroidSchedulers.mainThread())
                                           .subscribeWith(new DisposableSingleObserver<PlayersResult>()
-                                           {
-                                              @Override
-                                              public void onSuccess(@NonNull PlayersResult playersResult)
-                                              {
-                                                 playersResultRetrieved(playersResult);
-                                              }
+                                          {
+                                             @Override
+                                             public void onSuccess(@NonNull PlayersResult playersResult)
+                                             {
+                                                playersResultRetrieved(playersResult);
+                                             }
 
-                                              @Override
-                                              public void onError(@NonNull Throwable e)
-                                              {
-                                                 playersResultLoadError.setValue(true);
-                                                 loading.setValue(false);
-                                                 e.printStackTrace();
-                                              }
-                                           }));
+                                             @Override
+                                             public void onError(@NonNull Throwable e)
+                                             {
+                                                playersResultLoadError.setValue(true);
+                                                loading.setValue(false);
+                                                e.printStackTrace();
+                                             }
+                                          }));
    }
 
    private void playersResultRetrieved(PlayersResult playersResult)
    {
+      page++;
       playersResultLiveData.setValue(playersResult);
       playersResultLoadError.setValue(false);
       loading.setValue(false);

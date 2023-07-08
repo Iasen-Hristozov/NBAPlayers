@@ -12,21 +12,20 @@ import io.reactivex.schedulers.Schedulers;
 import test.nbaplayers.model.BallDontLieApiService;
 import test.nbaplayers.model.SeasonAverages;
 import test.nbaplayers.model.SeasonAveragesResult;
-import test.nbaplayers.model.StatsResult;
 
-public class SeasonAveragesResultViewModel extends AndroidViewModel
+public class SeasonAveragesViewModel extends AndroidViewModel
 {
-   public MutableLiveData<SeasonAverages> seasonAveragesLiveData  = new MutableLiveData<>();
+   public MutableLiveData<SeasonAverages> seasonAveragesLiveData = new MutableLiveData<>();
 
    public MutableLiveData<SeasonAveragesResult> seasonAveragesResultLiveData = new MutableLiveData<>();
-   public MutableLiveData<Boolean>     seasonAveragesLoadError      = new MutableLiveData<>();
-   public MutableLiveData<Boolean>     loading                 = new MutableLiveData<>();
+   public MutableLiveData<Boolean> seasonAveragesLoadError = new MutableLiveData<>();
+   public MutableLiveData<Boolean> loading = new MutableLiveData<>();
 
 
    private final BallDontLieApiService ballDontLieApiService;
-   private final CompositeDisposable   disposable;
+   private final CompositeDisposable disposable;
 
-   public SeasonAveragesResultViewModel(@NonNull Application application)
+   public SeasonAveragesViewModel(@NonNull Application application)
    {
       super(application);
 
@@ -42,27 +41,28 @@ public class SeasonAveragesResultViewModel extends AndroidViewModel
                                           .subscribeOn(Schedulers.newThread())
                                           .observeOn(AndroidSchedulers.mainThread())
                                           .subscribeWith(new DisposableSingleObserver<SeasonAveragesResult>()
-                                           {
-                                              @Override
-                                              public void onSuccess(@NonNull SeasonAveragesResult seasonAverages)
-                                              {
-                                                 seasonAveragesRetrieved(seasonAverages);
-                                              }
+                                          {
+                                             @Override
+                                             public void onSuccess(@NonNull SeasonAveragesResult seasonAverages)
+                                             {
+                                                seasonAveragesRetrieved(seasonAverages);
+                                             }
 
-                                              @Override
-                                              public void onError(@NonNull Throwable e)
-                                              {
-                                                 seasonAveragesLoadError.setValue(true);
-                                                 loading.setValue(false);
-                                                 e.printStackTrace();
-                                              }
-                                           }));
+                                             @Override
+                                             public void onError(@NonNull Throwable e)
+                                             {
+                                                seasonAveragesLoadError.setValue(true);
+                                                loading.setValue(false);
+                                                e.printStackTrace();
+                                             }
+                                          }));
    }
 
    private void seasonAveragesRetrieved(SeasonAveragesResult seasonAveragesResult)
    {
       seasonAveragesResultLiveData.setValue(seasonAveragesResult);
-      seasonAveragesLiveData.setValue(seasonAveragesResult.getData().get(0));
+      seasonAveragesLiveData.setValue(seasonAveragesResult.getData()
+                                                          .get(0));
       seasonAveragesLoadError.setValue(false);
       loading.setValue(false);
    }

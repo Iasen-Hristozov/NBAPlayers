@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import test.nbaplayers.databinding.FragmentDetailsBinding;
-import test.nbaplayers.viewmodel.SeasonAveragesResultViewModel;
+import test.nbaplayers.viewmodel.SeasonAveragesViewModel;
 
 public class DetailsFragment extends Fragment
 {
@@ -18,7 +18,7 @@ public class DetailsFragment extends Fragment
 
    private FragmentDetailsBinding binding;
 
-   SeasonAveragesResultViewModel seasonAveragesViewModel;
+   SeasonAveragesViewModel seasonAveragesViewModel;
 
    @Override
    public void onCreate(Bundle savedInstanceState)
@@ -39,7 +39,7 @@ public class DetailsFragment extends Fragment
 
       if(playerId > 0)
       {
-         seasonAveragesViewModel = new ViewModelProvider(this).get(SeasonAveragesResultViewModel.class);
+         seasonAveragesViewModel = new ViewModelProvider(this).get(SeasonAveragesViewModel.class);
          seasonAveragesViewModel.fetchFromRemote(250);
          seasonAveragesViewModel.seasonAveragesLiveData.observe(getViewLifecycleOwner(), seasonAverages -> {
             if(seasonAverages.getSeason() != null)

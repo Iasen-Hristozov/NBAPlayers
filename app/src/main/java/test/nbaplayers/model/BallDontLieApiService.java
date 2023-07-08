@@ -38,9 +38,9 @@ public class BallDontLieApiService
                         .create(BallDontLieApi.class);
    }
 
-   public Single<PlayersResult> getPlayersResult(int page, int perPage)
+   public Single<PlayersResult> getPlayersResult(int perPage, int page)
    {
-      return api.getPlayers(page, perPage);
+      return api.getPlayers(perPage, page);
    }
 
 //   public Single<List<Player>> getPlayers(int page, int perPage)
