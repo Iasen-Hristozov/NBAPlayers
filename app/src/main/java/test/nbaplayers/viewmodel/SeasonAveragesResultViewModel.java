@@ -2,8 +2,6 @@ package test.nbaplayers.viewmodel;
 
 import android.app.Application;
 
-import java.util.List;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
@@ -12,21 +10,23 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 import test.nbaplayers.model.BallDontLieApiService;
-import test.nbaplayers.model.Stats;
+import test.nbaplayers.model.SeasonAverages;
+import test.nbaplayers.model.SeasonAveragesResult;
 import test.nbaplayers.model.StatsResult;
 
-public class StatsResultViewModel extends AndroidViewModel
+public class SeasonAveragesResultViewModel extends AndroidViewModel
 {
-   public MutableLiveData<List<Stats>> statsListLiveData   = new MutableLiveData<>();
-   public MutableLiveData<StatsResult> statsResultLiveData = new MutableLiveData<>();
-   public MutableLiveData<Boolean>     statsResultLoadError = new MutableLiveData<>();
-   public MutableLiveData<Boolean>     loading              = new MutableLiveData<>();
+   public MutableLiveData<SeasonAverages> seasonAveragesLiveData  = new MutableLiveData<>();
+
+   public MutableLiveData<SeasonAveragesResult> seasonAveragesResultLiveData = new MutableLiveData<>();
+   public MutableLiveData<Boolean>     seasonAveragesLoadError      = new MutableLiveData<>();
+   public MutableLiveData<Boolean>     loading                 = new MutableLiveData<>();
 
 
    private final BallDontLieApiService ballDontLieApiService;
    private final CompositeDisposable   disposable;
 
-   public StatsResultViewModel(@NonNull Application application)
+   public SeasonAveragesResultViewModel(@NonNull Application application)
    {
       super(application);
 
@@ -38,32 +38,32 @@ public class StatsResultViewModel extends AndroidViewModel
    public void fetchFromRemote(int playerId)
    {
       loading.setValue(true);
-      disposable.add(ballDontLieApiService.getStatsResult(playerId)
+      disposable.add(ballDontLieApiService.getSeasonAverages(playerId)
                                           .subscribeOn(Schedulers.newThread())
                                           .observeOn(AndroidSchedulers.mainThread())
-                                          .subscribeWith(new DisposableSingleObserver<StatsResult>()
+                                          .subscribeWith(new DisposableSingleObserver<SeasonAveragesResult>()
                                            {
                                               @Override
-                                              public void onSuccess(@NonNull StatsResult statsResult)
+                                              public void onSuccess(@NonNull SeasonAveragesResult seasonAverages)
                                               {
-                                                 statsResultRetrieved(statsResult);
+                                                 seasonAveragesRetrieved(seasonAverages);
                                               }
 
                                               @Override
                                               public void onError(@NonNull Throwable e)
                                               {
-                                                 statsResultLoadError.setValue(true);
+                                                 seasonAveragesLoadError.setValue(true);
                                                  loading.setValue(false);
                                                  e.printStackTrace();
                                               }
                                            }));
    }
 
-   private void statsResultRetrieved(StatsResult statsResult)
+   private void seasonAveragesRetrieved(SeasonAveragesResult seasonAveragesResult)
    {
-      statsResultLiveData.setValue(statsResult);
-      statsListLiveData.setValue(statsResult.getData());
-      statsResultLoadError.setValue(false);
+      seasonAveragesResultLiveData.setValue(seasonAveragesResult);
+      seasonAveragesLiveData.setValue(seasonAveragesResult.getData().get(0));
+      seasonAveragesLoadError.setValue(false);
       loading.setValue(false);
    }
 }

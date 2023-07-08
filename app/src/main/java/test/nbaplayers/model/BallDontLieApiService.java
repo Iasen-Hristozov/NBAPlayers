@@ -53,4 +53,14 @@ public class BallDontLieApiService
    {
       return api.getStats(playerId);
    }
+
+   public Single<SeasonAveragesResult> getSeasonAveragesResult(int playerId)
+   {
+      return api.getSeasonAverages(playerId);
+   }
+
+   public Single<SeasonAveragesResult> getSeasonAverages(int playerId)
+   {
+      return api.getSeasonAverages(playerId);
+   }
 }

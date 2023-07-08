@@ -1,8 +1,11 @@
 package test.nbaplayers.model;
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Team
+public class Team implements Parcelable
 {
    @SerializedName("id")
    @Expose
@@ -81,4 +84,64 @@ public class Team
    public void setName(String name) {
       this.name = name;
    }
+
+
+   @Override
+   public int describeContents()
+   {
+      return 0;
+   }
+
+   @Override
+   public void writeToParcel(Parcel dest, int flags)
+   {
+      dest.writeValue(this.id);
+      dest.writeString(this.abbreviation);
+      dest.writeString(this.city);
+      dest.writeString(this.conference);
+      dest.writeString(this.division);
+      dest.writeString(this.fullName);
+      dest.writeString(this.name);
+   }
+
+   public void readFromParcel(Parcel source)
+   {
+      this.id = (Integer) source.readValue(Integer.class.getClassLoader());
+      this.abbreviation = source.readString();
+      this.city = source.readString();
+      this.conference = source.readString();
+      this.division = source.readString();
+      this.fullName = source.readString();
+      this.name = source.readString();
+   }
+
+   public Team()
+   {
+   }
+
+   protected Team(Parcel in)
+   {
+      this.id = (Integer) in.readValue(Integer.class.getClassLoader());
+      this.abbreviation = in.readString();
+      this.city = in.readString();
+      this.conference = in.readString();
+      this.division = in.readString();
+      this.fullName = in.readString();
+      this.name = in.readString();
+   }
+
+   public static final Creator<Team> CREATOR = new Creator<Team>()
+   {
+      @Override
+      public Team createFromParcel(Parcel source)
+      {
+         return new Team(source);
+      }
+
+      @Override
+      public Team[] newArray(int size)
+      {
+         return new Team[size];
+      }
+   };
 }

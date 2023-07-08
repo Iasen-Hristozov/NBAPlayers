@@ -1,6 +1,7 @@
 package test.nbaplayers;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -29,10 +30,25 @@ public class MainActivity extends AppCompatActivity
       // menu should be considered as top level destinations.
       AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(R.id.navigation_players,
                                                                                 R.id.navigation_about,
-                                                                                R.id.navigation_notifications).build();
+                                                                                R.id.navigation_player).build();
       NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
       NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
       NavigationUI.setupWithNavController(binding.navView, navController);
+
+
    }
+
+//   @Override
+//   public boolean onOptionsItemSelected(MenuItem item) {
+//      switch (item.getItemId()) {
+//         case android.R.id.home:
+//            getSupportFragmentManager().popBackStack();
+//            return true;
+//      }
+//      return super.onOptionsItemSelected(item);
+//   }
+//   public void showUpButton() { getSupportActionBar().setDisplayHomeAsUpEnabled(true); }
+//   public void hideUpButton() { getSupportActionBar().setDisplayHomeAsUpEnabled(false); }
+
 
 }

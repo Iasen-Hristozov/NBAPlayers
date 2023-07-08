@@ -1,8 +1,11 @@
 package test.nbaplayers.model;
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Game
+public class Game implements Parcelable
 {
    @SerializedName("id")
    @Expose
@@ -125,4 +128,76 @@ public class Game
    public void setVisitorTeamScore(Integer visitorTeamScore) {
       this.visitorTeamScore = visitorTeamScore;
    }
+
+
+   @Override
+   public int describeContents()
+   {
+      return 0;
+   }
+
+   @Override
+   public void writeToParcel(Parcel dest, int flags)
+   {
+      dest.writeValue(this.id);
+      dest.writeString(this.date);
+      dest.writeValue(this.homeTeamId);
+      dest.writeValue(this.homeTeamScore);
+      dest.writeValue(this.period);
+      dest.writeValue(this.postseason);
+      dest.writeValue(this.season);
+      dest.writeString(this.status);
+      dest.writeString(this.time);
+      dest.writeValue(this.visitorTeamId);
+      dest.writeValue(this.visitorTeamScore);
+   }
+
+   public void readFromParcel(Parcel source)
+   {
+      this.id = (Integer) source.readValue(Integer.class.getClassLoader());
+      this.date = source.readString();
+      this.homeTeamId = (Integer) source.readValue(Integer.class.getClassLoader());
+      this.homeTeamScore = (Integer) source.readValue(Integer.class.getClassLoader());
+      this.period = (Integer) source.readValue(Integer.class.getClassLoader());
+      this.postseason = (Boolean) source.readValue(Boolean.class.getClassLoader());
+      this.season = (Integer) source.readValue(Integer.class.getClassLoader());
+      this.status = source.readString();
+      this.time = source.readString();
+      this.visitorTeamId = (Integer) source.readValue(Integer.class.getClassLoader());
+      this.visitorTeamScore = (Integer) source.readValue(Integer.class.getClassLoader());
+   }
+
+   public Game()
+   {
+   }
+
+   protected Game(Parcel in)
+   {
+      this.id = (Integer) in.readValue(Integer.class.getClassLoader());
+      this.date = in.readString();
+      this.homeTeamId = (Integer) in.readValue(Integer.class.getClassLoader());
+      this.homeTeamScore = (Integer) in.readValue(Integer.class.getClassLoader());
+      this.period = (Integer) in.readValue(Integer.class.getClassLoader());
+      this.postseason = (Boolean) in.readValue(Boolean.class.getClassLoader());
+      this.season = (Integer) in.readValue(Integer.class.getClassLoader());
+      this.status = in.readString();
+      this.time = in.readString();
+      this.visitorTeamId = (Integer) in.readValue(Integer.class.getClassLoader());
+      this.visitorTeamScore = (Integer) in.readValue(Integer.class.getClassLoader());
+   }
+
+   public static final Creator<Game> CREATOR = new Creator<Game>()
+   {
+      @Override
+      public Game createFromParcel(Parcel source)
+      {
+         return new Game(source);
+      }
+
+      @Override
+      public Game[] newArray(int size)
+      {
+         return new Game[size];
+      }
+   };
 }

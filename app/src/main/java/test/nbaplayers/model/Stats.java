@@ -1,8 +1,12 @@
 package test.nbaplayers.model;
+
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Stats
+public class Stats implements Parcelable
 {
    @SerializedName("id")
    @Expose
@@ -257,4 +261,112 @@ public class Stats
    public void setTurnover(Integer turnover) {
       this.turnover = turnover;
    }
+
+
+   @Override
+   public int describeContents()
+   {
+      return 0;
+   }
+
+   @Override
+   public void writeToParcel(Parcel dest, int flags)
+   {
+      dest.writeValue(this.id);
+      dest.writeValue(this.ast);
+      dest.writeValue(this.blk);
+      dest.writeValue(this.dreb);
+      dest.writeValue(this.fg3Pct);
+      dest.writeValue(this.fg3a);
+      dest.writeValue(this.fg3m);
+      dest.writeValue(this.fgPct);
+      dest.writeValue(this.fga);
+      dest.writeValue(this.fgm);
+      dest.writeValue(this.ftPct);
+      dest.writeValue(this.fta);
+      dest.writeValue(this.ftm);
+      dest.writeParcelable(this.game, flags);
+      dest.writeString(this.min);
+      dest.writeValue(this.oreb);
+      dest.writeValue(this.pf);
+      dest.writeSerializable(this.player);
+      dest.writeValue(this.pts);
+      dest.writeValue(this.reb);
+      dest.writeValue(this.stl);
+      dest.writeParcelable(this.team, flags);
+      dest.writeValue(this.turnover);
+   }
+
+   public void readFromParcel(Parcel source)
+   {
+      this.id = (Integer) source.readValue(Integer.class.getClassLoader());
+      this.ast = (Integer) source.readValue(Integer.class.getClassLoader());
+      this.blk = (Integer) source.readValue(Integer.class.getClassLoader());
+      this.dreb = (Integer) source.readValue(Integer.class.getClassLoader());
+      this.fg3Pct = (Double) source.readValue(Double.class.getClassLoader());
+      this.fg3a = (Integer) source.readValue(Integer.class.getClassLoader());
+      this.fg3m = (Integer) source.readValue(Integer.class.getClassLoader());
+      this.fgPct = (Double) source.readValue(Double.class.getClassLoader());
+      this.fga = (Integer) source.readValue(Integer.class.getClassLoader());
+      this.fgm = (Integer) source.readValue(Integer.class.getClassLoader());
+      this.ftPct = (Double) source.readValue(Double.class.getClassLoader());
+      this.fta = (Integer) source.readValue(Integer.class.getClassLoader());
+      this.ftm = (Integer) source.readValue(Integer.class.getClassLoader());
+      this.game = source.readParcelable(Game.class.getClassLoader());
+      this.min = source.readString();
+      this.oreb = (Integer) source.readValue(Integer.class.getClassLoader());
+      this.pf = (Integer) source.readValue(Integer.class.getClassLoader());
+      this.player = (Player) source.readSerializable();
+      this.pts = (Integer) source.readValue(Integer.class.getClassLoader());
+      this.reb = (Integer) source.readValue(Integer.class.getClassLoader());
+      this.stl = (Integer) source.readValue(Integer.class.getClassLoader());
+      this.team = source.readParcelable(Team.class.getClassLoader());
+      this.turnover = (Integer) source.readValue(Integer.class.getClassLoader());
+   }
+
+   public Stats()
+   {
+   }
+
+   protected Stats(Parcel in)
+   {
+      this.id = (Integer) in.readValue(Integer.class.getClassLoader());
+      this.ast = (Integer) in.readValue(Integer.class.getClassLoader());
+      this.blk = (Integer) in.readValue(Integer.class.getClassLoader());
+      this.dreb = (Integer) in.readValue(Integer.class.getClassLoader());
+      this.fg3Pct = (Double) in.readValue(Double.class.getClassLoader());
+      this.fg3a = (Integer) in.readValue(Integer.class.getClassLoader());
+      this.fg3m = (Integer) in.readValue(Integer.class.getClassLoader());
+      this.fgPct = (Double) in.readValue(Double.class.getClassLoader());
+      this.fga = (Integer) in.readValue(Integer.class.getClassLoader());
+      this.fgm = (Integer) in.readValue(Integer.class.getClassLoader());
+      this.ftPct = (Double) in.readValue(Double.class.getClassLoader());
+      this.fta = (Integer) in.readValue(Integer.class.getClassLoader());
+      this.ftm = (Integer) in.readValue(Integer.class.getClassLoader());
+      this.game = in.readParcelable(Game.class.getClassLoader());
+      this.min = in.readString();
+      this.oreb = (Integer) in.readValue(Integer.class.getClassLoader());
+      this.pf = (Integer) in.readValue(Integer.class.getClassLoader());
+      this.player = (Player) in.readSerializable();
+      this.pts = (Integer) in.readValue(Integer.class.getClassLoader());
+      this.reb = (Integer) in.readValue(Integer.class.getClassLoader());
+      this.stl = (Integer) in.readValue(Integer.class.getClassLoader());
+      this.team = in.readParcelable(Team.class.getClassLoader());
+      this.turnover = (Integer) in.readValue(Integer.class.getClassLoader());
+   }
+
+   public static final Creator<Stats> CREATOR = new Creator<Stats>()
+   {
+      @Override
+      public Stats createFromParcel(Parcel source)
+      {
+         return new Stats(source);
+      }
+
+      @Override
+      public Stats[] newArray(int size)
+      {
+         return new Stats[size];
+      }
+   };
 }

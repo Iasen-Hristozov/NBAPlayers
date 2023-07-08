@@ -1,8 +1,11 @@
 package test.nbaplayers.model;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Player
+import java.io.Serializable;
+
+public class Player implements Serializable
 {
    @SerializedName("id")
    @Expose

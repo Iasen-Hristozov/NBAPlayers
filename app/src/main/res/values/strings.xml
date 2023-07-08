@@ -13,4 +13,13 @@
     <string name="position">Position</string>
     <string name="position_sample">Attack</string>
     <string name="details_button">Details</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="sample_season">2020</string>
+    <string name="sample_games">56</string>
+    <string name="sample_points">230</string>
+    <string name="not_available">N/A</string>
+    <string name="games_label">Games</string>
+    <string name="points_label">Points</string>
+    <string name="season_label">Season</string>
 </resources>

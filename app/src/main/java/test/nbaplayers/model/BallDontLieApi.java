@@ -14,4 +14,7 @@ public interface BallDontLieApi
 
    @GET("api/v1/stats")
    Single<StatsResult> getStats(@Query("player_ids[]") int playerId);
+
+   @GET("api/v1/season_averages")
+   Single<SeasonAveragesResult> getSeasonAverages(@Query("player_ids[]") int playerId);
 }

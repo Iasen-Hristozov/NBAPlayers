@@ -9,7 +9,15 @@
         android:id="@+id/navigation_players"
         android:name="test.nbaplayers.ui.players.PlayersFragment"
         android:label="@string/title_players"
-        tools:layout="@layout/fragment_players" />
+        tools:layout="@layout/fragment_players">
+
+        <action android:id="@+id/action_players_to_player"
+            app:destination="@id/navigation_player">
+            <argument
+                android:name="player"
+                app:argType="test.nbaplayers.model.Player" />
+        </action>
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_about"
@@ -18,8 +26,39 @@
         tools:layout="@layout/fragment_about" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_player"
         android:name="test.nbaplayers.ui.player.PlayerFragment"
         android:label="@string/title_player"
-        tools:layout="@layout/fragment_player" />
+        tools:layout="@layout/fragment_player">
+        <argument
+            android:name="player"
+            app:argType="test.nbaplayers.model.Player"/>
+
+<!--        <action android:id="@+id/action_player_to_details"-->
+<!--            app:destination="@id/navigation_details">-->
+<!--            <argument-->
+<!--                android:name="statsList"-->
+<!--                app:argType="test.nbaplayers.model.Stats[]" />-->
+<!--        </action>-->
+
+        <action android:id="@+id/action_player_to_details"
+            app:destination="@id/navigation_details">
+            <argument
+                android:name="playerId"
+                app:argType="integer" />
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_details"
+        android:name="test.nbaplayers.ui.details.DetailsFragment"
+        android:label="Details"
+        tools:layout="@layout/fragment_details">
+<!--        <argument-->
+<!--            android:name="statsList"-->
+<!--            app:argType="test.nbaplayers.model.Stats[]"/>-->
+        <argument
+            android:name="playerId"
+            app:argType="integer"/>
+    </fragment>
 </navigation>

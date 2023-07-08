@@ -5,18 +5,15 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import test.nbaplayers.BuildConfig;
 
-//import test.nbaplayers.BuildConfig;
 public class AboutViewModel extends ViewModel
 {
-
    private final MutableLiveData<String> text;
 
    public AboutViewModel()
    {
       text = new MutableLiveData<>();
-      String s = BuildConfig.VERSION_NAME + "." +BuildConfig.BUILD_TIME;
-//      text.setValue("This is dashboard fragment");
-      text.setValue(s);
+      String version = BuildConfig.VERSION_NAME + "." +BuildConfig.BUILD_TIME;
+      text.setValue(version);
    }
 
    public LiveData<String> getText()

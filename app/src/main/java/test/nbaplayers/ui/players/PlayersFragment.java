@@ -8,19 +8,23 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import test.nbaplayers.MainActivity;
 import test.nbaplayers.databinding.FragmentPlayersBinding;
 import test.nbaplayers.databinding.LoadingViewBinding;
 import test.nbaplayers.model.Player;
 import test.nbaplayers.viewmodel.PlayersResultViewModel;
 import test.nbaplayers.viewmodel.StatsResultViewModel;
 
-public class PlayersFragment extends Fragment
+public class PlayersFragment extends Fragment implements FragmentManager.OnBackStackChangedListener
 {
    private final static int PLAYERS_NUMBER = 25;
 
@@ -38,6 +42,13 @@ public class PlayersFragment extends Fragment
 
    private String searchText = "";
 
+
+   @Override
+   public void onCreate(@Nullable Bundle savedInstanceState) {
+      super.onCreate(savedInstanceState);
+      // listen to backstack changes
+      getActivity().getSupportFragmentManager().addOnBackStackChangedListener(this);
+   }
    public View onCreateView(@NonNull LayoutInflater inflater,
                             ViewGroup container, Bundle savedInstanceState)
    {
@@ -64,7 +75,12 @@ public class PlayersFragment extends Fragment
          }
       });
 
-      playersListAdapter = new PlayersListAdapter(getActivity(), players);
+      playersListAdapter = new PlayersListAdapter(getActivity(), players, (player, view) -> {
+//         PlayersFragmentDirections.ActionPlayersToPlayer action  = PlayersFragmentDirections.actionPlayersToPlayer(player);
+////               Navigation.findNavController(v).navigate(R.id.action_players_to_player);
+//         Navigation.findNavController(view).navigate(action);
+         Navigation.findNavController(view).navigate(PlayersFragmentDirections.actionPlayersToPlayer(player));
+      });
 
       LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
       DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(playersRecycleView.getContext(),
@@ -113,8 +129,8 @@ public class PlayersFragment extends Fragment
       playersResultViewModel.fetchFromRemote(0, PLAYERS_NUMBER);
 
 
-      StatsResultViewModel statsResultViewModel = new ViewModelProvider(this).get(StatsResultViewModel.class);
-      statsResultViewModel.fetchFromRemote(237);
+//      StatsResultViewModel statsResultViewModel = new ViewModelProvider(this).get(StatsResultViewModel.class);
+//      statsResultViewModel.fetchFromRemote(237);
 
       playersResultViewModel.playersResultLiveData.observe(getViewLifecycleOwner(), playersResult -> {
 //         PlayersResultViewModel repositoryViewModel = new ViewModelProvider(requireActivity()).get(PlayersResultViewModel.class);
@@ -161,5 +177,16 @@ public class PlayersFragment extends Fragment
    {
       super.onDestroyView();
       binding = null;
+   }
+
+   @Override
+   public void onBackStackChanged()
+   {
+//      if(getActivity() != null) {
+//         // enable Up button only if there are entries on the backstack
+//         if(getActivity().getSupportFragmentManager().getBackStackEntryCount() < 1) {
+//            ((MainActivity)getActivity()).hideUpButton();
+//         }
+//      }
    }
 }
