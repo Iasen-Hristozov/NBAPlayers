@@ -38,15 +38,15 @@ public class MainActivity extends AppCompatActivity
 
    }
 
-//   @Override
-//   public boolean onOptionsItemSelected(MenuItem item) {
-//      switch (item.getItemId()) {
-//         case android.R.id.home:
-//            getSupportFragmentManager().popBackStack();
-//            return true;
-//      }
-//      return super.onOptionsItemSelected(item);
-//   }
+   @Override
+   public boolean onOptionsItemSelected(MenuItem item) {
+      switch (item.getItemId()) {
+         case android.R.id.home:
+            getSupportFragmentManager().popBackStack();
+            return true;
+      }
+      return super.onOptionsItemSelected(item);
+   }
 //   public void showUpButton() { getSupportActionBar().setDisplayHomeAsUpEnabled(true); }
 //   public void hideUpButton() { getSupportActionBar().setDisplayHomeAsUpEnabled(false); }
 
