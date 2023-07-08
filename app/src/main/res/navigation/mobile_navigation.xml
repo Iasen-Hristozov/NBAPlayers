@@ -29,7 +29,7 @@
         android:id="@+id/navigation_player"
         android:name="test.nbaplayers.ui.player.PlayerFragment"
         android:label="@string/title_player"
-        tools:layout="@layout/fragment_player">
+        tools:layout="@layout/fragment_player_old">
         <argument
             android:name="player"
             app:argType="test.nbaplayers.model.Player"/>

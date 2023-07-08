@@ -52,8 +52,6 @@ public class PlayersFragment extends Fragment implements FragmentManager.OnBackS
    public View onCreateView(@NonNull LayoutInflater inflater,
                             ViewGroup container, Bundle savedInstanceState)
    {
-      PlayersViewModel playersViewModel = new ViewModelProvider(this).get(PlayersViewModel.class);
-
       binding = FragmentPlayersBinding.inflate(inflater, container, false);
       View root = binding.getRoot();
       playersRecycleView = binding.playersRecycleView;

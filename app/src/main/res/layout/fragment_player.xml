@@ -1,113 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.player.PlayerFragment">
+    android:layout_height="match_parent">
 
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="1dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5"/>
-    <TextView
-        android:id="@+id/nameTextView"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        android:text="@string/name_sample"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.25" />
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/teamTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:textSize="18sp"
-        android:text="@string/team_sample"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nameTextView"
-        app:layout_constraintVertical_bias="0.100"/>
+        <TextView
+            android:id="@+id/nameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/not_available"
+            android:textColor="@color/text"
+            android:textSize="26sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.3" />
 
-    <TextView
-        android:id="@+id/heightLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        app:layout_constraintVertical_bias="0.7"
-        android:text="@string/height"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/teamTextView" />
+        <TextView
+            android:id="@+id/teamTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/info_element_margin"
+            android:text="@string/not_available"
+            android:textColor="@color/text"
+            android:textSize="24sp"
+            android:gravity="center_horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/nameTextView"
+            app:layout_constraintVertical_bias="0.33" />
 
-    <TextView
-        android:id="@+id/heightTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="@string/height_sample"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@id/heightLabel"
-        app:layout_constraintStart_toEndOf="@id/heightLabel" />
+        <TextView
+            android:id="@+id/heightTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/not_available"
+            android:textColor="@color/text"
+            android:textSize="@dimen/info_text_size"
+            app:layout_constraintBottom_toTopOf="@+id/heightLabel"
+            app:layout_constraintEnd_toEndOf="@+id/heightLabel"
+            app:layout_constraintStart_toStartOf="@+id/heightLabel" />
+
+        <TextView
+            android:id="@+id/heightLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/info_element_margin"
+            android:text="@string/height"
+            android:textColor="@color/text"
+            android:textSize="@dimen/info_label_text_size"
+            app:layout_constraintBottom_toBottomOf="@id/divider"
+            app:layout_constraintEnd_toStartOf="@id/divider" />
 
 
-    <TextView
-        android:id="@+id/weightLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/weight"
-        app:layout_constraintTop_toBottomOf="@id/heightLabel"
-        app:layout_constraintEnd_toStartOf="@+id/weightTextView"
-        app:layout_constraintStart_toStartOf="@+id/heightLabel" />
+        <View
+            android:id="@+id/divider"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="@dimen/info_element_margin"
+            android:background="@color/divider"
+            app:layout_constraintBottom_toBottomOf="@+id/weightLabel"
+            app:layout_constraintEnd_toStartOf="@+id/weightTextView"
+            app:layout_constraintTop_toTopOf="@+id/weightTextView" />
 
-    <TextView
-        android:id="@+id/weightTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="@string/weight_sample"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@id/weightLabel"
-        app:layout_constraintStart_toEndOf="@id/weightLabel" />
+        <TextView
+            android:id="@+id/weightTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/info_element_margin"
+            android:text="@string/not_available"
+            android:textColor="@color/text"
+            android:textSize="@dimen/info_text_size"
+            app:layout_constraintBottom_toTopOf="@id/weightLabel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/teamTextView" />
 
-    <TextView
-        android:id="@+id/positionLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/position"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toStartOf="@id/positionTextView"
-        app:layout_constraintBottom_toBottomOf="@id/heightLabel" />
+        <TextView
+            android:id="@+id/weightLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/weight"
+            android:textColor="@color/text"
+            android:textSize="@dimen/info_label_text_size"
+            android:layout_marginEnd="@dimen/info_element_margin"
+            android:layout_marginStart="@dimen/info_element_margin"
+            app:layout_constraintEnd_toEndOf="@id/weightTextView"
+            app:layout_constraintStart_toStartOf="@id/weightTextView"
+            app:layout_constraintTop_toBottomOf="@+id/weightTextView" />
 
-    <TextView
-        android:id="@+id/positionTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="28dp"
-        android:text="@string/position_sample"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@id/positionLabel"
-        app:layout_constraintEnd_toEndOf="parent" />
 
-    <Button
-        android:id="@+id/detailsButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/details_button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/teamTextView"
-        app:layout_constraintVertical_bias="0.500" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <View
+            android:id="@+id/divider_2"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/info_element_margin"
+            android:background="@color/divider"
+            app:layout_constraintBottom_toBottomOf="@+id/weightLabel"
+            app:layout_constraintStart_toEndOf="@+id/weightTextView"
+            app:layout_constraintTop_toTopOf="@+id/weightTextView" />
+
+        <TextView
+            android:id="@+id/positionTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/not_available"
+            android:textColor="@color/text"
+            android:textSize="@dimen/info_text_size"
+            app:layout_constraintBottom_toTopOf="@+id/positionLabel"
+            app:layout_constraintEnd_toEndOf="@+id/positionLabel"
+            app:layout_constraintStart_toStartOf="@+id/positionLabel" />
+
+        <TextView
+            android:id="@+id/positionLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/info_element_margin"
+            android:text="@string/position"
+            android:textColor="@color/text"
+            android:textSize="@dimen/info_label_text_size"
+            app:layout_constraintBottom_toBottomOf="@id/divider_2"
+            app:layout_constraintStart_toEndOf="@id/divider_2" />
+
+        <Button
+            android:id="@+id/detailsButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/details_button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/teamTextView"
+            app:layout_constraintVertical_bias="0.500" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>
