@@ -1,4 +1,4 @@
-package test.nbaplayers.ui.players;
+package test.nbaplayers.view;
 
 import android.content.Context;
 import android.text.Spannable;
@@ -15,7 +15,6 @@ import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 import test.nbaplayers.R;
 import test.nbaplayers.model.Player;
@@ -28,23 +27,19 @@ public class PlayersListAdapter extends RecyclerView.Adapter<PlayersListAdapter.
 
    List<Player> visiblePlayersList = new ArrayList<>();
    private String filterString = "";
-//   private final PlayersResultViewModel playersResultViewModel;
 
-//   public PlayersListAdapter(List<Player> repositoriesList, PlayersResultViewModel repositoryViewModel)
    public PlayersListAdapter(Context context, List<Player> playersList, PlayersListAdapterListener listener)
    {
       this.context = context;
       this.playersList = playersList;
       this.visiblePlayersList.addAll(playersList);
       this.listener = listener;
-//      this.playersResultViewModel = repositoryViewModel;
    }
 
    public interface PlayersListAdapterListener
    {
       void onPlayerSelected(Player player, View view);
    }
-
 
    @NonNull
    @Override
@@ -61,25 +56,7 @@ public class PlayersListAdapter extends RecyclerView.Adapter<PlayersListAdapter.
    {
       holder.bind(position);
 
-//      holder.getPlayerTextView().setText(String.format("%s %s",
-//                                                       playersList.get(position)
-//                                                                 .getFirstName(),
-//                                                       playersList.get(position)
-//                                                                 .getLastName()));
-
-
-//      holder.itemView.setOnClickListener(v -> {
-//               Player player = visiblePlayersList.get(position);
-////               playersResultViewModel.fetchContributorsFromRemote(player.getOwner().getLogin(), player.getName());
-////               playersResultViewModel.setRepositoryLiveData(player);
-//         PlayersFragmentDirections.ActionPlayersToPlayer action  = PlayersFragmentDirections.actionPlayersToPlayer(player);
-////               Navigation.findNavController(v).navigate(R.id.action_players_to_player);
-//         Navigation.findNavController(v).navigate(action);
-//      });
-
-      holder.itemView.setOnClickListener(v -> {
-         listener.onPlayerSelected(visiblePlayersList.get(position), v);
-      });
+      holder.itemView.setOnClickListener(v -> listener.onPlayerSelected(visiblePlayersList.get(position), v));
    }
 
    @Override

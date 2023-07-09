@@ -1,10 +1,9 @@
-package test.nbaplayers.ui.about;
+package test.nbaplayers.view;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -19,13 +18,12 @@ public class AboutFragment extends Fragment
    public View onCreateView(@NonNull LayoutInflater inflater,
                             ViewGroup container, Bundle savedInstanceState)
    {
-      AboutViewModel dashboardViewModel = new ViewModelProvider(this).get(AboutViewModel.class);
-
       binding = FragmentAboutBinding.inflate(inflater, container, false);
       View root = binding.getRoot();
 
-      final TextView textView = binding.textAbout;
-      dashboardViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+      AboutViewModel aboutViewModel = new ViewModelProvider(this).get(AboutViewModel.class);
+      aboutViewModel.getText().observe(getViewLifecycleOwner(), binding.aboutTextView::setText);
+
       return root;
    }
 

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_players"
-        android:name="test.nbaplayers.ui.players.PlayersFragment"
+        android:name="test.nbaplayers.view.PlayersFragment"
         android:label="@string/title_players"
         tools:layout="@layout/fragment_players">
 
@@ -21,25 +21,18 @@
 
     <fragment
         android:id="@+id/navigation_about"
-        android:name="test.nbaplayers.ui.about.AboutFragment"
+        android:name="test.nbaplayers.view.AboutFragment"
         android:label="@string/title_about"
         tools:layout="@layout/fragment_about" />
 
     <fragment
         android:id="@+id/navigation_player"
-        android:name="test.nbaplayers.ui.player.PlayerFragment"
+        android:name="test.nbaplayers.view.PlayerFragment"
         android:label="@string/title_player"
-        tools:layout="@layout/fragment_player_old">
+        tools:layout="@layout/fragment_player">
         <argument
             android:name="player"
             app:argType="test.nbaplayers.model.Player"/>
-
-<!--        <action android:id="@+id/action_player_to_details"-->
-<!--            app:destination="@id/navigation_details">-->
-<!--            <argument-->
-<!--                android:name="statsList"-->
-<!--                app:argType="test.nbaplayers.model.Stats[]" />-->
-<!--        </action>-->
 
         <action android:id="@+id/action_player_to_details"
             app:destination="@id/navigation_details">
@@ -51,12 +44,10 @@
 
     <fragment
         android:id="@+id/navigation_details"
-        android:name="test.nbaplayers.ui.details.DetailsFragment"
+        android:name="test.nbaplayers.view.DetailsFragment"
         android:label="Details"
-        tools:layout="@layout/fragment_details_old">
-<!--        <argument-->
-<!--            android:name="statsList"-->
-<!--            app:argType="test.nbaplayers.model.Stats[]"/>-->
+        tools:layout="@layout/fragment_details">
+
         <argument
             android:name="playerId"
             app:argType="integer"/>

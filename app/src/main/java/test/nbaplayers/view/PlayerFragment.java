@@ -1,4 +1,4 @@
-package test.nbaplayers.ui.player;
+package test.nbaplayers.view;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -20,18 +20,6 @@ public class PlayerFragment extends Fragment
 
    Player player;
 
-//   @Override
-//   public void onCreate(Bundle savedInstanceState)
-//   {
-//      super.onCreate(savedInstanceState);
-//      NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
-//
-//      AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-//            R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
-//            .build();
-//      NavigationUI.setupWithNavController(binding.myToolbar, navController, appBarConfiguration);
-//   }
-
    public View onCreateView(@NonNull LayoutInflater inflater,
                             ViewGroup container, Bundle savedInstanceState)
    {
@@ -39,10 +27,6 @@ public class PlayerFragment extends Fragment
       View root = binding.getRoot();
 
       binding.detailsButton.setOnClickListener(v -> Navigation.findNavController(v).navigate(PlayerFragmentDirections.actionPlayerToDetails(player.getId())));
-//      ((MainActivity)getActivity()).showUpButton();
-//      final TextView textView = binding.textNotifications;
-//      notificationsViewModel.getText()
-//                            .observe(getViewLifecycleOwner(), textView::setText);
       ((AppCompatActivity)requireActivity()).getSupportActionBar()
                                             .setDisplayHomeAsUpEnabled(true);
       return root;
@@ -52,6 +36,11 @@ public class PlayerFragment extends Fragment
    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState)
    {
       super.onViewCreated(view, savedInstanceState);
+
+      if(getArguments() == null)
+      {
+         return;
+      }
 
       player = PlayerFragmentArgs.fromBundle(getArguments()).getPlayer();
 

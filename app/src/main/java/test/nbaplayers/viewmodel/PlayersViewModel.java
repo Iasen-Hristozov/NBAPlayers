@@ -10,19 +10,21 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 import test.nbaplayers.model.BallDontLieApiService;
+import test.nbaplayers.model.Meta;
 import test.nbaplayers.model.PlayersResult;
 
 public class PlayersViewModel extends AndroidViewModel
 {
    private final static int PLAYERS_NUMBER = 25;
    private int page;
-   public MutableLiveData<PlayersResult> playersResultLiveData  = new MutableLiveData<>();
-   public MutableLiveData<Boolean>       playersResultLoadError = new MutableLiveData<>();
-   public MutableLiveData<Boolean>       loading                = new MutableLiveData<>();
+   private Meta meta = null;
+   public MutableLiveData<PlayersResult> playersResultLiveData = new MutableLiveData<>();
+   public MutableLiveData<Boolean> playersResultLoadError = new MutableLiveData<>();
+   public MutableLiveData<Boolean> loading = new MutableLiveData<>();
 
 
    private final BallDontLieApiService ballDontLieApiService;
-   private final CompositeDisposable   disposable;
+   private final CompositeDisposable disposable;
 
    public PlayersViewModel(@NonNull Application application)
    {
@@ -37,6 +39,8 @@ public class PlayersViewModel extends AndroidViewModel
 
    public void fetchNextPlayers()
    {
+      if(meta != null && page > meta.getTotalPages())
+         return;
       loading.setValue(true);
       disposable.add(ballDontLieApiService.getPlayersResult(PLAYERS_NUMBER, page)
                                           .subscribeOn(Schedulers.newThread())
@@ -61,6 +65,8 @@ public class PlayersViewModel extends AndroidViewModel
 
    private void playersResultRetrieved(PlayersResult playersResult)
    {
+      if(meta == null)
+         meta = playersResult.getMeta();
       page++;
       playersResultLiveData.setValue(playersResult);
       playersResultLoadError.setValue(false);

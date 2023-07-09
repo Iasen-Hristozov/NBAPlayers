@@ -36,63 +36,32 @@ public class Player implements Serializable
       return id;
    }
 
-   public void setId(Integer id) {
-      this.id = id;
-   }
-
    public String getFirstName() {
       return firstName;
-   }
-
-   public void setFirstName(String firstName) {
-      this.firstName = firstName;
    }
 
    public Object getHeightFeet() {
       return heightFeet;
    }
 
-   public void setHeightFeet(Object heightFeet) {
-      this.heightFeet = heightFeet;
-   }
-
    public Object getHeightInches() {
       return heightInches;
-   }
-
-   public void setHeightInches(Object heightInches) {
-      this.heightInches = heightInches;
    }
 
    public String getLastName() {
       return lastName;
    }
 
-   public void setLastName(String lastName) {
-      this.lastName = lastName;
-   }
 
    public String getPosition() {
       return position;
-   }
-
-   public void setPosition(String position) {
-      this.position = position;
    }
 
    public Team getTeam() {
       return team;
    }
 
-   public void setTeam(Team team) {
-      this.team = team;
-   }
-
    public Object getWeightPounds() {
       return weightPounds;
-   }
-
-   public void setWeightPounds(Object weightPounds) {
-      this.weightPounds = weightPounds;
    }
 }

@@ -43,22 +43,6 @@ public class BallDontLieApiService
       return api.getPlayers(perPage, page);
    }
 
-//   public Single<List<Player>> getPlayers(int page, int perPage)
-//   {
-//      return api.getPlayers(page, perPage);
-//   }
-
-
-   public Single<StatsResult> getStatsResult(int playerId)
-   {
-      return api.getStats(playerId);
-   }
-
-   public Single<SeasonAveragesResult> getSeasonAveragesResult(int playerId)
-   {
-      return api.getSeasonAverages(playerId);
-   }
-
    public Single<SeasonAveragesResult> getSeasonAverages(int playerId)
    {
       return api.getSeasonAverages(playerId);
