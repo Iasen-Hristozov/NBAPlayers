@@ -1,7 +1,6 @@
 package test.nbaplayers.viewmodel;
 
 import android.app.Application;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -12,8 +11,7 @@ import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 import test.nbaplayers.NbaPlayersApplication;
 import test.nbaplayers.R;
-import test.nbaplayers.coordinator.Navigator;
-import test.nbaplayers.coordinator.PlayersFlowCoordinator;
+import test.nbaplayers.SingleLiveData;
 import test.nbaplayers.model.BallDontLieApiService;
 import test.nbaplayers.model.Meta;
 import test.nbaplayers.model.Player;
@@ -24,7 +22,7 @@ public class PlayersViewModel extends AndroidViewModel
    private final static int PLAYERS_NUMBER = 25;
    private int page;
    private Meta meta = null;
-   public MutableLiveData<PlayersResult> playersResultLiveData = new MutableLiveData<>();
+   public SingleLiveData<PlayersResult> playersResultLiveData = new SingleLiveData<>();
    public MutableLiveData<Boolean> playersResultLoadError = new MutableLiveData<>();
    public MutableLiveData<Boolean> loading = new MutableLiveData<>();
 

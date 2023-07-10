@@ -1,6 +1,5 @@
 package test.nbaplayers.view;
 
-import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +14,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import test.nbaplayers.R;
 import test.nbaplayers.databinding.FragmentPlayersBinding;
 import test.nbaplayers.model.Player;
 import test.nbaplayers.viewmodel.PlayersViewModel;
@@ -103,15 +101,14 @@ public class PlayersFragment extends Fragment
 
       observeViewModels();
 
-      loadPlayers();
+      if(players.size() == 0)
+         loadPlayers();
 
       return root;
    }
 
    private void observeViewModels()
    {
-
-      playersViewModel.fetchNextPlayers();
       playersViewModel.playersResultLiveData.observe(getViewLifecycleOwner(), playersResult -> {
          int currentCount = players.size();
          players.addAll(playersResult.getPlayers());

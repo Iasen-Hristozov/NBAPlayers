@@ -1,4 +1,4 @@
-package test.nbaplayers;
+package test.nbaplayers.view;
 
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -8,6 +8,8 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import test.nbaplayers.NbaPlayersApplication;
+import test.nbaplayers.R;
 import test.nbaplayers.coordinator.Navigator;
 import test.nbaplayers.coordinator.PlayersFlowCoordinator;
 import test.nbaplayers.databinding.ActivityMainBinding;
