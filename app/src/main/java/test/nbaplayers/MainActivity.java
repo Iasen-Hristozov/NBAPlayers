@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity
    public boolean onOptionsItemSelected(MenuItem item) {
       if(item.getItemId() == android.R.id.home)
       {
-         getSupportFragmentManager().popBackStack();
+         ((NbaPlayersApplication) getApplication()).getPlayersFlowCoordinator().onBackPressed();
          return true;
       }
       return super.onOptionsItemSelected(item);

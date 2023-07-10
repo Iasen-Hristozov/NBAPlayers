@@ -42,6 +42,11 @@ public class Navigator
       navController.navigate(PlayerFragmentDirections.actionPlayerToErrorDialog(error));
    }
 
+   public void popupBack()
+   {
+      navController.popBackStack();
+   }
+
    public void closeDetails()
    {
       navController.navigateUp();

@@ -34,6 +34,11 @@ public class PlayersFlowCoordinator
       navigator.showErrorDialog(error);
    }
 
+   public void onBackPressed()
+   {
+      navigator.popupBack();
+   }
+
    public void onDetailsCloseClicked()
    {
       navigator.closeDetails();
