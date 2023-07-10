@@ -1,6 +1,7 @@
 package test.nbaplayers.viewmodel;
 
 import android.app.Application;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -9,8 +10,12 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
+import test.nbaplayers.NbaPlayersApplication;
+import test.nbaplayers.coordinator.Navigator;
+import test.nbaplayers.coordinator.PlayersFlowCoordinator;
 import test.nbaplayers.model.BallDontLieApiService;
 import test.nbaplayers.model.Meta;
+import test.nbaplayers.model.Player;
 import test.nbaplayers.model.PlayersResult;
 
 public class PlayersViewModel extends AndroidViewModel
@@ -21,7 +26,6 @@ public class PlayersViewModel extends AndroidViewModel
    public MutableLiveData<PlayersResult> playersResultLiveData = new MutableLiveData<>();
    public MutableLiveData<Boolean> playersResultLoadError = new MutableLiveData<>();
    public MutableLiveData<Boolean> loading = new MutableLiveData<>();
-
 
    private final BallDontLieApiService ballDontLieApiService;
    private final CompositeDisposable disposable;
@@ -71,5 +75,10 @@ public class PlayersViewModel extends AndroidViewModel
       playersResultLiveData.setValue(playersResult);
       playersResultLoadError.setValue(false);
       loading.setValue(false);
+   }
+
+   public void playerClicked(View view, Player player)
+   {
+      ((NbaPlayersApplication) getApplication()).getPlayersFlowCoordinator().onPlayerSelected(player);
    }
 }

@@ -19,12 +19,11 @@ public class AboutFragment extends Fragment
                             ViewGroup container, Bundle savedInstanceState)
    {
       binding = FragmentAboutBinding.inflate(inflater, container, false);
-      View root = binding.getRoot();
 
       AboutViewModel aboutViewModel = new ViewModelProvider(this).get(AboutViewModel.class);
       aboutViewModel.getText().observe(getViewLifecycleOwner(), binding.aboutTextView::setText);
 
-      return root;
+      return binding.getRoot();
    }
 
    @Override

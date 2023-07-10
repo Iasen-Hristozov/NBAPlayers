@@ -1,6 +1,7 @@
 package test.nbaplayers.viewmodel;
 
 import android.app.Application;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -9,6 +10,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
+import test.nbaplayers.NbaPlayersApplication;
+import test.nbaplayers.coordinator.Navigator;
+import test.nbaplayers.coordinator.PlayersFlowCoordinator;
 import test.nbaplayers.model.BallDontLieApiService;
 import test.nbaplayers.model.SeasonAverages;
 import test.nbaplayers.model.SeasonAveragesResult;
@@ -16,11 +20,9 @@ import test.nbaplayers.model.SeasonAveragesResult;
 public class SeasonAveragesViewModel extends AndroidViewModel
 {
    public MutableLiveData<SeasonAverages> seasonAveragesLiveData = new MutableLiveData<>();
-
    public MutableLiveData<SeasonAveragesResult> seasonAveragesResultLiveData = new MutableLiveData<>();
    public MutableLiveData<Boolean> seasonAveragesLoadError = new MutableLiveData<>();
    public MutableLiveData<Boolean> loading = new MutableLiveData<>();
-
 
    private final BallDontLieApiService ballDontLieApiService;
    private final CompositeDisposable disposable;
@@ -61,9 +63,17 @@ public class SeasonAveragesViewModel extends AndroidViewModel
    private void seasonAveragesRetrieved(SeasonAveragesResult seasonAveragesResult)
    {
       seasonAveragesResultLiveData.setValue(seasonAveragesResult);
-      seasonAveragesLiveData.setValue(seasonAveragesResult.getData()
-                                                          .get(0));
+      if(seasonAveragesResult.getData().size() > 0)
+         seasonAveragesLiveData.setValue(seasonAveragesResult.getData()
+                                                             .get(0));
+      else
+         seasonAveragesLiveData.setValue(new SeasonAverages());
       seasonAveragesLoadError.setValue(false);
       loading.setValue(false);
+   }
+
+   public void onDetailsClicked(View view, SeasonAverages seasonAverages)
+   {
+      ((NbaPlayersApplication) getApplication()).getPlayersFlowCoordinator().onDetailsClicked(seasonAverages);
    }
 }

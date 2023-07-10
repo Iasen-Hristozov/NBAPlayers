@@ -12,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,7 +27,7 @@ public class PlayersFragment extends Fragment
 
    private final static ArrayList<Player> players = new ArrayList<>();
 
-   PlayersViewModel playersResultViewModel;
+   private PlayersViewModel playersViewModel;
 
    private PlayersListAdapter playersListAdapter;
 
@@ -59,7 +58,7 @@ public class PlayersFragment extends Fragment
 
       playersListAdapter = new PlayersListAdapter(getActivity(),
                                                   players,
-                                                  (player, view) -> Navigation.findNavController(view).navigate(PlayersFragmentDirections.actionPlayersToPlayer(player)));
+                                                  (player, view) -> playersViewModel.playerClicked(view, player));
 
       RecyclerView playersRecycleView = binding.playersRecycleView;
       LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -100,7 +99,7 @@ public class PlayersFragment extends Fragment
          }
       });
 
-      playersResultViewModel = new ViewModelProvider(this).get(PlayersViewModel.class);
+      playersViewModel = new ViewModelProvider(this).get(PlayersViewModel.class);
 
       observeViewModels();
 
@@ -112,15 +111,15 @@ public class PlayersFragment extends Fragment
    private void observeViewModels()
    {
 
-      playersResultViewModel.fetchNextPlayers();
-      playersResultViewModel.playersResultLiveData.observe(getViewLifecycleOwner(), playersResult -> {
+      playersViewModel.fetchNextPlayers();
+      playersViewModel.playersResultLiveData.observe(getViewLifecycleOwner(), playersResult -> {
          int currentCount = players.size();
          players.addAll(playersResult.getPlayers());
          playersListAdapter.notifyItemRangeInserted(currentCount, playersResult.getPlayers().size());
          playersListAdapter.filter(searchText);
       });
 
-      playersResultViewModel.playersResultLoadError.observe(getViewLifecycleOwner(), error ->
+      playersViewModel.playersResultLoadError.observe(getViewLifecycleOwner(), error ->
       {
          if(error)
             new AlertDialog.Builder(getContext())
@@ -131,7 +130,7 @@ public class PlayersFragment extends Fragment
                   .show();
       });
 
-      playersResultViewModel.loading.observe(getViewLifecycleOwner(), loading -> {
+      playersViewModel.loading.observe(getViewLifecycleOwner(), loading -> {
          isLoading = loading;
 
          binding.progressView.progressView.setVisibility(loading ? View.VISIBLE : View.GONE);
@@ -140,7 +139,7 @@ public class PlayersFragment extends Fragment
 
    private void loadPlayers()
    {
-      playersResultViewModel.fetchNextPlayers();
+      playersViewModel.fetchNextPlayers();
    }
 
    @Override

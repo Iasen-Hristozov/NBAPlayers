@@ -37,19 +37,19 @@
         <action android:id="@+id/action_player_to_details"
             app:destination="@id/navigation_details">
             <argument
-                android:name="playerId"
-                app:argType="integer" />
+                android:name="playerDetails"
+                app:argType="test.nbaplayers.model.SeasonAverages" />
         </action>
     </fragment>
 
     <fragment
         android:id="@+id/navigation_details"
         android:name="test.nbaplayers.view.DetailsFragment"
-        android:label="Details"
+        android:label="@string/title_details"
         tools:layout="@layout/fragment_details">
 
         <argument
-            android:name="playerId"
-            app:argType="integer"/>
+            android:name="playerDetails"
+            app:argType="test.nbaplayers.model.SeasonAverages"/>
     </fragment>
 </navigation>
