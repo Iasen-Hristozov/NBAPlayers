@@ -37,6 +37,11 @@ public class Navigator
       navController.navigate(PlayerFragmentDirections.actionPlayerToDetails(seasonAverages));
    }
 
+   public void showErrorDialog(String error)
+   {
+      navController.navigate(PlayerFragmentDirections.actionPlayerToErrorDialog(error));
+   }
+
    public void closeDetails()
    {
       navController.navigateUp();

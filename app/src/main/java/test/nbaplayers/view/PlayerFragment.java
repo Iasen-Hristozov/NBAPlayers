@@ -35,8 +35,9 @@ public class PlayerFragment extends Fragment
       seasonAveragesViewModel = new ViewModelProvider(this).get(SeasonAveragesViewModel.class);
 
       binding.detailsButton.setOnClickListener(v -> {
-         seasonAveragesViewModel.fetchFromRemote(player.getId());
-         observeViewModels();});
+         seasonAveragesViewModel.fetch(player.getId());
+         observeViewModels();
+      });
 
       return binding.getRoot();
    }
@@ -66,11 +67,11 @@ public class PlayerFragment extends Fragment
 
    private void observeViewModels()
    {
-      seasonAveragesViewModel.seasonAveragesLiveData.observe(getViewLifecycleOwner(), seasonAverages -> seasonAveragesViewModel.onDetailsClicked(getView(), seasonAverages));
+      seasonAveragesViewModel.seasonAveragesLiveData.observe(getViewLifecycleOwner(), seasonAverages -> seasonAveragesViewModel.onDetailsClicked(seasonAverages));
       seasonAveragesViewModel.seasonAveragesLoadError.observe(getViewLifecycleOwner(), error ->
       {
          if(error)
-            showErrorDialog();
+            seasonAveragesViewModel.onSeasonAveragesError();
       });
       seasonAveragesViewModel.loading.observe(getViewLifecycleOwner(), loading -> binding.progressView.progressView.setVisibility(loading ? View.VISIBLE : View.GONE));
    }
@@ -80,15 +81,5 @@ public class PlayerFragment extends Fragment
    {
       super.onDestroyView();
       binding = null;
-   }
-
-   private void showErrorDialog()
-   {
-      new AlertDialog.Builder(getContext())
-            .setTitle(R.string.title_error)
-            .setMessage(R.string.error_details)
-            .setNegativeButton(android.R.string.ok, null)
-            .setIcon(android.R.drawable.ic_dialog_alert)
-            .show();
    }
 }

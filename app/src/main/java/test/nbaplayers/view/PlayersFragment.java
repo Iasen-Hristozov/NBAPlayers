@@ -58,7 +58,7 @@ public class PlayersFragment extends Fragment
 
       playersListAdapter = new PlayersListAdapter(getActivity(),
                                                   players,
-                                                  (player, view) -> playersViewModel.playerClicked(view, player));
+                                                  (player, view) -> playersViewModel.playerClicked(player));
 
       RecyclerView playersRecycleView = binding.playersRecycleView;
       LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -122,12 +122,7 @@ public class PlayersFragment extends Fragment
       playersViewModel.playersResultLoadError.observe(getViewLifecycleOwner(), error ->
       {
          if(error)
-            new AlertDialog.Builder(getContext())
-                  .setTitle(R.string.title_error)
-                  .setMessage(R.string.error_players)
-                  .setNegativeButton(android.R.string.ok, null)
-                  .setIcon(android.R.drawable.ic_dialog_alert)
-                  .show();
+            playersViewModel.onPlayersError();
       });
 
       playersViewModel.loading.observe(getViewLifecycleOwner(), loading -> {

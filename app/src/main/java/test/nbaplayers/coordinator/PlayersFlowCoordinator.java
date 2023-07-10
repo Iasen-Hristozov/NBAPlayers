@@ -29,6 +29,11 @@ public class PlayersFlowCoordinator
       navigator.showDetails(seasonAverages);
    }
 
+   public void onDataRetrievingError(String error)
+   {
+      navigator.showErrorDialog(error);
+   }
+
    public void onDetailsCloseClicked()
    {
       navigator.closeDetails();

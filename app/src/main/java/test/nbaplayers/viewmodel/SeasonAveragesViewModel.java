@@ -1,7 +1,6 @@
 package test.nbaplayers.viewmodel;
 
 import android.app.Application;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -11,8 +10,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 import test.nbaplayers.NbaPlayersApplication;
-import test.nbaplayers.coordinator.Navigator;
-import test.nbaplayers.coordinator.PlayersFlowCoordinator;
+import test.nbaplayers.R;
 import test.nbaplayers.model.BallDontLieApiService;
 import test.nbaplayers.model.SeasonAverages;
 import test.nbaplayers.model.SeasonAveragesResult;
@@ -36,7 +34,7 @@ public class SeasonAveragesViewModel extends AndroidViewModel
       disposable = new CompositeDisposable();
    }
 
-   public void fetchFromRemote(int playerId)
+   public void fetch(int playerId)
    {
       loading.setValue(true);
       disposable.add(ballDontLieApiService.getSeasonAverages(playerId)
@@ -72,8 +70,13 @@ public class SeasonAveragesViewModel extends AndroidViewModel
       loading.setValue(false);
    }
 
-   public void onDetailsClicked(View view, SeasonAverages seasonAverages)
+   public void onDetailsClicked(SeasonAverages seasonAverages)
    {
       ((NbaPlayersApplication) getApplication()).getPlayersFlowCoordinator().onDetailsClicked(seasonAverages);
+   }
+
+   public void onSeasonAveragesError()
+   {
+      ((NbaPlayersApplication) getApplication()).getPlayersFlowCoordinator().onDataRetrievingError(getApplication().getString(R.string.error_details));
    }
 }

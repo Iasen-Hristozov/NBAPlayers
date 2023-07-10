@@ -40,6 +40,13 @@
                 android:name="playerDetails"
                 app:argType="test.nbaplayers.model.SeasonAverages" />
         </action>
+
+        <action android:id="@+id/action_player_to_error_dialog"
+            app:destination="@id/navigation_error_dialog">
+            <argument
+                android:name="error"
+                app:argType="string" />
+        </action>
     </fragment>
 
     <fragment
@@ -52,4 +59,13 @@
             android:name="playerDetails"
             app:argType="test.nbaplayers.model.SeasonAverages"/>
     </fragment>
+
+    <dialog
+        android:id="@+id/navigation_error_dialog"
+        android:name="test.nbaplayers.view.ErrorDialogFragment"
+        android:label="Error" >
+        <argument
+            android:name="error"
+            app:argType="string" />
+    </dialog>
 </navigation>

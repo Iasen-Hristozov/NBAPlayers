@@ -11,6 +11,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 import test.nbaplayers.NbaPlayersApplication;
+import test.nbaplayers.R;
 import test.nbaplayers.coordinator.Navigator;
 import test.nbaplayers.coordinator.PlayersFlowCoordinator;
 import test.nbaplayers.model.BallDontLieApiService;
@@ -77,8 +78,13 @@ public class PlayersViewModel extends AndroidViewModel
       loading.setValue(false);
    }
 
-   public void playerClicked(View view, Player player)
+   public void playerClicked(Player player)
    {
       ((NbaPlayersApplication) getApplication()).getPlayersFlowCoordinator().onPlayerSelected(player);
+   }
+
+   public void onPlayersError()
+   {
+      ((NbaPlayersApplication) getApplication()).getPlayersFlowCoordinator().onDataRetrievingError(getApplication().getString(R.string.error_players));
    }
 }

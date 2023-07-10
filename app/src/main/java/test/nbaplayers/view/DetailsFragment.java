@@ -14,19 +14,19 @@ import test.nbaplayers.model.SeasonAverages;
 public class DetailsFragment extends Fragment
 {
    public final static String ARG_PLAYER_DETAILS = "SeasonAverages";
-   private SeasonAverages seasonAverages;
+//   private SeasonAverages seasonAverages;
 
    private FragmentDetailsBinding binding;
-
-   @Override
-   public void onCreate(Bundle savedInstanceState)
-   {
-      super.onCreate(savedInstanceState);
-      if(getArguments() != null)
-      {
-         seasonAverages = getArguments().getParcelable(ARG_PLAYER_DETAILS);
-      }
-   }
+//
+//   @Override
+//   public void onCreate(Bundle savedInstanceState)
+//   {
+//      super.onCreate(savedInstanceState);
+//      if(getArguments() != null)
+//      {
+//         seasonAverages = getArguments().getParcelable(ARG_PLAYER_DETAILS);
+//      }
+//   }
 
    @Override
    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -44,7 +44,7 @@ public class DetailsFragment extends Fragment
       if(getArguments() == null)
          return;
 
-      seasonAverages = DetailsFragmentArgs.fromBundle(getArguments()).getPlayerDetails();
+      SeasonAverages seasonAverages = DetailsFragmentArgs.fromBundle(getArguments()).getPlayerDetails();
       if(seasonAverages.getSeason() != null)
          binding.seasonTextView.setText(String.valueOf(seasonAverages.getSeason()));
       if(seasonAverages.getGamesPlayed() != null)
